@@ -45,11 +45,6 @@
 			<artifactId>adventure-text-serializer-gson</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>net.kyori</groupId>
-			<artifactId>adventure-text-minimessage</artifactId>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
 	
 	<!-- Build -->
