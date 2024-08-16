@@ -17,16 +17,11 @@ public class ChatListener {
 	@Subscribe(order = PostOrder.LATE)
 	public void checkMutedChat(PlayerChatEvent event) {
 		if (!event.getResult().isAllowed()) return;
-		if (!event.getMessage().startsWith("/")) {
-			Player player = event.getPlayer();
-			if (!player.hasPermission("bungeechatcontrol.bypass.chat")) {
-				if (!player.getCurrentServer().map(s -> ChatUtil.isAllowed(s.getServerInfo().getName())).orElse(false)) {
-					event.setResult(ChatResult.denied());
-					player.sendMessage(LegacyComponentSerializer.legacySection().deserialize(Config.LANGUAGE_CHAT_DENY_MESSAGE.toString()));
-				}
-			}
+		Player player = event.getPlayer();
+		if (!player.hasPermission("bungeechatcontrol.bypass.chat") && !player.getCurrentServer().filter(s -> ChatUtil.isAllowed(s.getServerInfo().getName())).isPresent()) {
+			event.setResult(ChatResult.denied());
+			player.sendMessage(LegacyComponentSerializer.legacySection().deserialize(Config.LANGUAGE_CHAT_DENY_MESSAGE.toString()));
 		}
 	}
-	
 
 }
